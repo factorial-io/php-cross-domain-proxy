@@ -6,6 +6,8 @@
  * @param zlib
  */
 
+
+
 // Get normalized headers and such
 $headers = array_change_key_case(getallheaders());
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
@@ -64,7 +66,7 @@ do
 			CURLOPT_HTTPHEADER => $headers,
 			CURLOPT_HEADER => true,
 		]
-		+ ($curl_opts??[]) +
+		+ ($curl_opts ?? []) +
 		[
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_MAXREDIRS => $maxredirs,
