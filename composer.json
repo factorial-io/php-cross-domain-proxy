@@ -2,7 +2,7 @@
     "name": "geekality/php-cross-domain-proxy",
     "description": "Simple self-contained PHP proxy for cross-origin ajax requests.",
     "keywords": ["php-cross-domain-proxy", "cors", "cross-domain", "http", "proxy", "javascript", "ajax"],
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "support": {
         "docs": "https://github.com/Svish/php-cross-domain-proxy/blob/master/README.md",
         "issues": "https://github.com/Svish/php-cross-domain-proxy/issues",
