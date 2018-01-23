@@ -23,7 +23,7 @@ Installation
 Since `proxy.php` is completely self-contained, you can just
 
 1. Copy `proxy.php` into your web application,
-2. Edit the $whitelist array,
+2. Define the `$whitelist` array,
 3. And that's pretty much it...
 
 If using [Composer](http://getcomposer.org), you can also add
@@ -57,10 +57,10 @@ Usage
 
 On the client-side, when performing cross-origin requests:
 
-1. Make `url` point to the `proxy.php` script
-2. Set the HTTP header `X-Proxy-URL` to whatever URL you're calling, for example `http://api.example.com/some/path`
+1. Make `url` point to the `proxy.php` script.
+2. Set the HTTP header `X-Proxy-URL` to whatever URL you're calling, for example `http://api.example.com/some/path`.
 
-All parameters and HTTP headers (except `Cookie`, `Host` and `X-Proxy-URL`) will be used to recreate the request and performed server-side by the proxy. When complete it will mirror the response, including headers, and return it to the client-side script more or less as if it had been called directly.
+All parameters and HTTP headers (except `Cookie` and `Host`) will be used to recreate the request and performed server-side by the proxy. When complete it will mirror the response, including headers, and return it to the client-side script more or less as if it had been called directly.
 
 
 
@@ -125,7 +125,7 @@ $.ajax({
 Security
 ---
 
-The hostname of the referer is checked, but can be easily spoofed, so the whitelist array should be put to good use. Fill it with any number of the following types of criterias:
+Although the hostname of the referer is checked, that's easily spoofed, so security-wise there's only so much one can do. What should be done though is to define the whitelist. Fill it with any number of the following types of criterias:
 
 - Exact paths  
 	`['http://example.com/api/specific-method']`
