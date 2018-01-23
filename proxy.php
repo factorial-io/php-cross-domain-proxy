@@ -6,11 +6,11 @@
  * @param zlib
  */
 
-// Get stuff
-$headers = getallheaders();
+// Get normalized headers and such
+$headers = array_change_key_case(getallheaders());
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-$url = $headers['X-Proxy-Url'] ?? null;
-$cookie = $headers['X-Proxy-Cookie'] ?? null;
+$url = $headers['x-proxy-url'] ?? null;
+$cookie = $headers['x-proxy-cookie'] ?? null;
 
 
 
@@ -23,7 +23,7 @@ if( ! parse_url($url, PHP_URL_SCHEME))
 	failure(400, "Not an absolute URL: $url");
 
 // Check referer hostname
-if( ! parse_url($headers['Referer'] ?? null, PHP_URL_HOST) == $_SERVER['HTTP_HOST'])
+if( ! parse_url($headers['referer'] ?? null, PHP_URL_HOST) == $_SERVER['HTTP_HOST'])
 	failure(403, "Invalid referer");
 
 // Check whitelist, if not empty
@@ -32,7 +32,7 @@ if( ! array_reduce($whitelist ?? [], 'is_bad', [$url, false]))
 
 
 
-// Remove ignored headers and prepare the rest for resending
+// Remove ignored headers
 $ignore = [
 	'cookie',
 	'content-length',
@@ -40,11 +40,16 @@ $ignore = [
 	'x-proxy-url',
 	'x-proxy-cookie',
 	];
-$headers = array_diff_key(array_change_key_case($headers), array_flip($ignore));
+$headers = array_diff_key($headers, array_flip($ignore));
+
+// Set proxied cookie if we got one
 if($cookie)
 	$headers['Cookie'] = $cookie;
+
+// Format headers for curl
 foreach($headers as $key => &$value)
 	$value = ucwords($key, '-').": $value";
+
 
 
 // Init curl
