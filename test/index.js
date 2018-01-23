@@ -10,7 +10,6 @@ NProgress.configure({showSpinner: false});
 // Get whitelist
 $.ajax({
 	url: 'proxy.php?whitelist',
-	async: false,
 	success: function(data)
 	{
 		$('#whitelist').text(data);
@@ -97,8 +96,10 @@ function onAjaxComplete(e, x, opts)
 		.hide()
 		.fadeIn();
 
-	$('html,window')
-		.scrollTop($('.active').offset().top-30);
+	const active = $('.active');
+	if(active.length)
+		$('html,window')
+			.scrollTop(active.offset().top - 30);
 }
 
 function onPreKeydown(e)
