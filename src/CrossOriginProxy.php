@@ -21,6 +21,6 @@ class CrossOriginProxy
 	 */
 	public static function proxy(array $whitelist = [], array $curl_opts = [], $zlib = 'On')
 	{
-		require dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'proxy.php';
+		require __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'proxy.php';
 	}
 }
