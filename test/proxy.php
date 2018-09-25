@@ -1,10 +1,10 @@
 <?php
 
-require '../vendor/autoload.php';
+require '../src/CrossOriginProxy.php';
 
 // Example of a whitelist
-$whitelist = [
-	
+$whitelist = $_SERVER['SERVER_NAME'] == 'localhost' ? [] :
+[
 	// Exact matching
 	['http://www.yr.no/place/Sweden/Stockholm/Stockholm/forecast.xml'],
 	

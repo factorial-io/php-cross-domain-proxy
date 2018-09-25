@@ -73,7 +73,7 @@ function onClose()
 
 function onAjaxSend(e, x, opts)
 {
-	//if(opts.crossDomain)
+	// if(opts.crossDomain)
 	{
 		x.setRequestHeader('X-Proxy-Url', opts.url);
 		opts.url = 'proxy.php';
@@ -85,7 +85,7 @@ function onAjaxComplete(e, x, opts)
 {
 	var out = x.status >= 400 ? respBad : respOk;
 	out += ' ' + x.status + ' ' + x.statusText;
-	out += '\r\n' + x.getAllResponseHeaders()
+	out += '\r\n' + x.getAllResponseHeaders();
 	if(x.responseText)
 		out += '\r\n' + x.responseText;
 
