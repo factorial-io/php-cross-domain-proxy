@@ -6,8 +6,6 @@
  * @param zlib
  */
 
-
-
 // Get normalized headers and such
 $headers = array_change_key_case(getallheaders());
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
@@ -158,8 +156,9 @@ echo $content;
 function failure(int $status, $text)
 {
 	if(is_resource($text))
-		$text = curl_error($text);
+		$text = sprintf('[%s] %s', curl_errno($text), curl_error($text));
 	http_response_code($status);
+	header("X-Proxy-Curl-Error: $text");
 	exit($text);
 }
 
