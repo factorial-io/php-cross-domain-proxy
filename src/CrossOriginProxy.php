@@ -12,8 +12,8 @@ class CrossOriginProxy
 	/**
 	 * Proxies the incoming request and outputs the response, including headers.
 	 *
-	 * @param whitelist       Array of acceptable request URLs.
-	 * @param curl_opts       Array of cURL options to add to proxy request.
+	 * @param whitelist       Array of request URLs whitelist rules.
+	 * @param curl_opts       Array of cURL options for proxy request.
 	 * @param zlib            Value for zlib.output_compression.
 	 *
 	 * @see http://php.net/manual/function.curl-setopt.php
