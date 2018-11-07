@@ -19,7 +19,6 @@ $headers = array_change_key_case(getallheaders());
 $method = __('REQUEST_METHOD', $_SERVER);
 $url = __('x-proxy-url', $headers);
 $cookie = __('x-proxy-cookie', $headers);
-
 // Check that we have a URL
 if( ! $url)
 	http_response_code(400) and exit("X-Proxy-URL header missing");
@@ -44,7 +43,6 @@ if($cookie)
 	$headers['cookie'] = $cookie;
 foreach($headers as $key => &$value)
 	$value = "$key: $value";
-
 
 // Init curl
 $curl = curl_init();
@@ -96,21 +94,36 @@ curl_close($curl);
 
 
 // Remove any existing headers
-header_remove();
+// header_remove();
 
 // Use gz, if acceptable
 ob_start('ob_gzhandler');
 
 // Output headers
 $header = substr($out, 0, $info['header_size']);
-array_map('header', explode("\r\n", $header));
+array_map('filter_header', explode("\r\n", $header));
 
 // And finally the body
-echo substr($out, $info['header_size']);
+$content = substr($out, $info['header_size']);
+echo $content;
 
-
-
-
+function filter_header($payload) {
+  if (empty($payload)) {
+    return;
+  }
+  if (substr($payload, 0,2) == 'X-') {
+    header($payload);
+    return;
+  }
+  $header = array_map("trim", explode(":", $payload, 2));
+  if (in_array($header[0], [
+    'Date',
+    'Content-Type',
+    'Cache-Control'
+  ])) {
+    header($payload);
+  }
+}
 
 // Helper functions
 function __($key, array $array, $default = null)
